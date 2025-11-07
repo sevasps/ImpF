@@ -7,9 +7,9 @@ const palabras = {
   "Sadio Mané", "Son Heung-min", "Marcus Rashford", "Bruno Fernandes", "Casemiro",
   "Di María", "Paulo Dybala", "Thiago Silva", "Raphaël Varane", "Gerard Piqué",
   "Sergio Ramos", "Toni Kroos", "Phil Foden", "Declan Rice", "Frenkie de Jong",
-  "Christian Pulisic", "Zlatan Ibrahimović", "Edinson Cavani", "Luis Suárez", "James Rodríguez",
-  "Marco Reus", "Thomas Müller", "Ilkay Gündogan", "Achraf Hakimi", "Riyad Mahrez",
-  "Lamine Yamal", "Alexis Mac Allister", "Julián Álvarez", "Martínez", "Busquets"
+  "Florian Wirtz", "Ibrahimović", "Cavani", "Luis Suárez", "James Rodríguez",
+  "Marco Reus", "Thomas Müller", "Gündogan", "Achraf Hakimi", "Mahrez",
+  "Lamine Yamal", "Mac Allister", "Julián Álvarez", "Dibu Martínez", "Busquets"
   ],
   club: [
     "Real Madrid", "FC Barcelona", "Manchester United", "Liverpool", "Chelsea",
@@ -55,6 +55,7 @@ let palabraSecreta = "";
 let impostorIndex = -1;
 let jugadorActual = 0;
 
+
 function iniciarPartida() {
   const num = parseInt(document.getElementById("numJugadores").value);
   const categoria = document.getElementById("categoria").value;
@@ -91,18 +92,35 @@ function mostrarJugador() {
     const jugador = jugadores[jugadorActual];
     const div = document.createElement("div");
     div.innerHTML = `
-      <h3>${jugador.nombre}</h3>
-      <p>${jugador.rol === "Impostor" ? "Eres el IMPOSTOR. No sabes la palabra." : "La palabra secreta es: " + palabraSecreta}</p>
-      <button onclick="siguienteJugador()">Siguiente</button>
+      <h3>Jugador ${jugadorActual + 1} / ${jugadores.length}</h3>
+      <p class="${jugador.rol === 'Impostor' ? 'impostor' : ''}">
+        ${jugador.rol === "Impostor"
+          ? "Eres el IMPOSTOR. No sabes la palabra."
+          : "La palabra secreta es: " + palabraSecreta}
+      </p>
+      <button onclick="siguienteJugador()">Siguiente jugador</button>
     `;
     pantalla.appendChild(div);
   } else {
-    pantalla.innerHTML = `<p>¡Todos han visto su rol! Comienza la ronda de pistas.</p>`;
+    pantalla.innerHTML = `
+      <h3>¡Todos han visto su rol!</h3>
+      <p>Comienza la ronda de pistas. Cada jugador debe decir una palabra relacionada.</p>
+      <button onclick="reiniciarPartida()">Reiniciar partida</button>
+    `;
   }
 }
+
 
 function siguienteJugador() {
   jugadorActual++;
   mostrarJugador();
 }
+
+function reiniciarPartida() {
+  document.getElementById("pantallaJuego").innerHTML = "";
+}
+
+
+
+
 
